@@ -1,7 +1,8 @@
 from operator import rshift
 import cv2 as cv 
 import numpy as np
-import mediapipe as mp 
+import mediapipe as mp
+import sys
 mp_face_mesh = mp.solutions.face_mesh
 LEFT_EYE =[ 362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385,384, 398 ]
 # right eyes indices
@@ -9,6 +10,7 @@ RIGHT_EYE=[ 33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 1
 LEFT_IRIS = [474,475, 476, 477]
 RIGHT_IRIS = [469, 470, 471, 472]
 cap = cv.VideoCapture(0)
+f = open(sys.argv[1], "a")
 with mp_face_mesh.FaceMesh(
     max_num_faces=1,
     refine_landmarks=True,
@@ -35,6 +37,8 @@ with mp_face_mesh.FaceMesh(
             center_right = np.array([r_cx, r_cy], dtype=np.int32)
             cv.circle(frame, center_left, int(l_radius), (255,0,255), 1, cv.LINE_AA)
             cv.circle(frame, center_right, int(r_radius), (255,0,255), 1, cv.LINE_AA)
+            f.write(np.array_str(center_left)+" "+np.array_str(center_right)+"\n")
+            print(np.array_str(center_left)+" "+np.array_str(center_right)+"\n")
             
         cv.imshow('img', frame)
         key = cv.waitKey(1)
