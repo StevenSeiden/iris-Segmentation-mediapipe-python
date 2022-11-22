@@ -1,4 +1,10 @@
-# IRS-Segmentation Mediapipe Python
+# IRIS-Segmentation Mediapipe Python
+## Usage
+
+To get started on an M1 Mac: `brew install python@3.9; pip3.9 install mediapipe-silicon`
+
+To run: 
+`python3.9 main.py outputFile.txt`
 
 <details>
 <summary>Demo Video</summary>
