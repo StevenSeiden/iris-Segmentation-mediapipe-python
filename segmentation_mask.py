@@ -14,6 +14,8 @@ LEFT_IRIS = [474,475, 476, 477]
 RIGHT_IRIS = [469, 470, 471, 472]
 
 cap = cv.VideoCapture(0)
+f = open("out.txt", "a")
+
 
 with mp_face_mesh.FaceMesh(
     max_num_faces=1,
@@ -50,6 +52,8 @@ with mp_face_mesh.FaceMesh(
             center_right = np.array([r_cx, r_cy], dtype=np.int32)
             cv.circle(frame, center_left, int(l_radius), (0,255,0), 2, cv.LINE_AA)
             cv.circle(frame, center_right, int(r_radius), (0,255,0), 2, cv.LINE_AA)
+            f.write(np.array_str(center_left)+" "+np.array_str(center_right)+"\n")
+            print(np.array_str(center_left)+" "+np.array_str(center_right)+"\n")
 
             # cv.circle(frame, center_left, 1, (0,255,0), -1, cv.LINE_AA)
             # cv.circle(frame, center_right, 1, (0,255,0), -1, cv.LINE_AA)
@@ -64,4 +68,5 @@ with mp_face_mesh.FaceMesh(
         if key ==ord('q'):
             break
 cap.release()
+f.close()
 cv.destroyAllWindows()
